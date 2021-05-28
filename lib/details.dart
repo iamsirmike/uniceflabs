@@ -8,14 +8,18 @@ class Details extends StatelessWidget {
   Details({this.name, this.imagesrc, this.price});
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(name),
-        Text(imagesrc),
-        Text(
-          price.toString(),
-        ),
-      ],
+    
+    return Scaffold(
+      appBar: AppBar(),
+          body: Column(
+        children: [
+          Text(name),
+          Text(imagesrc),
+          Text(
+            price.toString(),
+          ),
+        ],
+      ),
     );
   }
 }
