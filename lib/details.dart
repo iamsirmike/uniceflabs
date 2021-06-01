@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:uniceflabs/main.dart';
 
-class Details extends StatelessWidget {
+class Details extends StatefulWidget {
   final String name;
   final String imagesrc;
   final int price;
 
-  int _itemcount = 0;
 
   Details({this.name, this.imagesrc, this.price});
+
+  @override
+  _DetailsState createState() => _DetailsState();
+}
+
+class _DetailsState extends State<Details> {
+  int _itemcount = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +48,7 @@ class Details extends StatelessWidget {
                   child: Container(
                     height: 300,
                     width: 500,
-                    child: Image.asset(imagesrc),
+                    child: Image.asset(widget.imagesrc),
                   ),
                 ),
               ],
@@ -72,7 +79,7 @@ class Details extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  name,
+                  widget.name,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
