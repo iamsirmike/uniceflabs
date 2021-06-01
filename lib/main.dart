@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:uniceflabs/CartProvider.dart';
+import 'package:uniceflabs/cart.dart';
 import 'package:uniceflabs/details.dart';
 
 void main() {
@@ -9,13 +12,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Unicef Lab',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => CartProvider(),
+        ),
+        // You can add another provider over here.
+      ],
+      child: MaterialApp(
+        title: 'Unicef Lab',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: MyHomePage(title: 'Home'),
       ),
-      home: MyHomePage(title: 'Home'),
     );
   }
 }
@@ -45,8 +56,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   icon: Icons.keyboard_arrow_left,
                 ),
                 Spacer(),
-                IconsContainer(
-                  icon: Icons.search,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Cart()),
+                    );
+                  },
+                  child: IconsContainer(
+                    icon: Icons.local_grocery_store,
+                  ),
                 ),
               ],
             ),
@@ -272,11 +291,7 @@ class Description extends StatelessWidget {
 class IconsContainer extends StatelessWidget {
   final IconData icon;
   final Color color;
-  const IconsContainer({
-    Key key,
-    this.icon,
-    this.color
-  }) : super(key: key);
+  const IconsContainer({Key key, this.icon, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -287,7 +302,11 @@ class IconsContainer extends StatelessWidget {
         color: Colors.grey[300],
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Center(child: Icon(icon, color: color,)),
+      child: Center(
+          child: Icon(
+        icon,
+        color: color,
+      )),
     );
   }
 }

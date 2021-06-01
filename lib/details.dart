@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:uniceflabs/CartProvider.dart';
 import 'package:uniceflabs/main.dart';
 
 class Details extends StatefulWidget {
   final String name;
   final String imagesrc;
   final int price;
-
 
   Details({this.name, this.imagesrc, this.price});
 
@@ -149,7 +150,12 @@ class _DetailsState extends State<Details> {
                 Spacer(),
                 IconButton(
                   icon: Icon(Icons.add),
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      _itemcount++;
+                    });
+                    print(_itemcount);
+                  },
                 ),
                 Text(
                   _itemcount.toString(),
@@ -160,7 +166,12 @@ class _DetailsState extends State<Details> {
                 ),
                 IconButton(
                   icon: Icon(Icons.remove),
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      _itemcount--;
+                    });
+                    print(_itemcount);
+                  },
                 ),
               ],
             ),
@@ -174,7 +185,10 @@ class _DetailsState extends State<Details> {
               minWidth: 400,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
-              onPressed: () {},
+              onPressed: () {
+                Provider.of<CartProvider>(context, listen: false).addToCart(widget.name, '40');
+                print(Provider.of<CartProvider>(context, listen: false).items.length);
+              },
               child: Text(
                 'ADD TO CART',
                 style: TextStyle(color: Colors.white),
