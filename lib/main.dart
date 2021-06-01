@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(height:50),
+            SizedBox(height: 50),
             Row(
               children: [
                 IconsContainer(
@@ -50,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 50),
             Text(
               'Unicef Labs Services',
               style: TextStyle(
@@ -58,19 +58,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 fontSize: 25,
               ),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: 15),
             Description(
               desc: 'We sell all kinds of Africsn made products',
             ),
+            SizedBox(height: 8),
             Description(
               desc: 'This shop provides both products and services',
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 40),
             Row(
               children: [
                 Text(
                   'Products 41',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
                 ),
                 Spacer(),
                 GestureDetector(
@@ -96,14 +97,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => Details(
-                          name: 'First product',
-                          imagesrc: 'assets/images/image1.jpeg',
+                          name: 'First Headset',
+                          imagesrc: 'assets/images/image2.png',
                           price: 900,
                         ),
                       ),
                     );
                   },
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
                         height: 200,
@@ -129,6 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 Spacer(),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       height: 200,
@@ -158,7 +161,10 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Text(
                   'Accessories 487',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22,
+                  ),
                 ),
                 Spacer(),
                 GestureDetector(
@@ -178,6 +184,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Row(
               children: [
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       height: 200,
@@ -206,6 +213,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 Spacer(),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       height: 200,
@@ -263,17 +271,23 @@ class Description extends StatelessWidget {
 
 class IconsContainer extends StatelessWidget {
   final IconData icon;
+  final Color color;
   const IconsContainer({
     Key key,
     this.icon,
+    this.color
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 15,
-      width: 15,
-      child: Icon(icon),
+      height: 40,
+      width: 40,
+      decoration: BoxDecoration(
+        color: Colors.grey[300],
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Center(child: Icon(icon, color: color,)),
     );
   }
 }
