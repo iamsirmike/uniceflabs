@@ -41,6 +41,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  var userGender;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,8 +53,19 @@ class _MyHomePageState extends State<MyHomePage> {
             SizedBox(height: 50),
             Row(
               children: [
-                IconsContainer(
-                  icon: Icons.keyboard_arrow_left,
+                GestureDetector(
+                  onTap: () async {
+                    final response =
+                        await Provider.of<CartProvider>(context, listen: false)
+                            .getUserData();
+                    setState(() {
+                      userGender = response;
+                    });
+                    print(userGender);
+                  },
+                  child: IconsContainer(
+                    icon: Icons.keyboard_arrow_left,
+                  ),
                 ),
                 Spacer(),
                 GestureDetector(
@@ -72,7 +84,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         left: 20,
                         child: Text(
                           '${Provider.of<CartProvider>(context).items.length}',
-                          style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: Colors.orange,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],

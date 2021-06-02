@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class CartProvider extends ChangeNotifier {
   List<CartItem> items = [];
@@ -14,8 +15,8 @@ class CartProvider extends ChangeNotifier {
   calculatTotalPrice() {
     int sum = 0;
     for (var i = 0; i < items.length; i++) {
-      sum += items[i].price;    
-      notifyListeners(); 
+      sum += items[i].price;
+      notifyListeners();
     }
     return sum;
   }
@@ -26,6 +27,15 @@ class CartProvider extends ChangeNotifier {
     items.remove(items[index]);
     notifyListeners();
   }
+
+  Future getUserData() async {
+    final response = await http.get(Uri.parse('https://randomuser.me/api'));
+    if (response == null) {
+      print('An error occured, please try agaon later');
+      return;
+    }
+    return response.body;
+  }
 }
 
 class CartItem {
@@ -34,22 +44,3 @@ class CartItem {
 
   CartItem(this.itemName, this.price);
 }
-
-// getTotal() {
-//     var sum = 0;
-//     for (var i = 0; i < addedCartItems.length; i++) {
-//       sum += addedCartItems[i].price;
-//       notifyListeners();
-//     }
-//     return sum;
-//   }
-
-//   removeCartItem(index) {
-//     addedCartItems.remove(addedCartItems[index]);
-//     notifyListeners();
-//   }
-
-//   clearCartItems() {
-//     addedCartItems.clear();
-//     notifyListeners();
-//   }
