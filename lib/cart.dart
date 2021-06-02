@@ -8,9 +8,11 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text('Cart'),
       ),
@@ -48,7 +50,15 @@ class _CartState extends State<Cart> {
                               Icons.delete,
                               color: Colors.red,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              cart.removeCartItem(index);
+                              final snackBar = SnackBar(
+                                content: Text('Item was deleted successfully'),
+                                backgroundColor: Colors.red,
+                              );
+
+                              _scaffoldKey.currentState.showSnackBar(snackBar);
+                            },
                           ),
                         ],
                       ),
@@ -57,28 +67,37 @@ class _CartState extends State<Cart> {
                 );
               },
             ),
-            SizedBox(height: 200),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: FlatButton(
-                color: Color(0xFF003FFF),
-                height: 60,
-                minWidth: 400,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-                onPressed: () {
-                  Provider.of<CartProvider>(context, listen: false)
-                      .addToCart('Second Headset', '40');
-                  print(Provider.of<CartProvider>(context, listen: false)
-                      .items
-                      .length);
-                },
-                child: Text(
-                  'ADD TO CART',
-                  style: TextStyle(color: Colors.white),
+              child: Row(children: [
+                Text(
+                  'Total ${Provider.of<CartProvider>(context).items.length}',
+                  style: TextStyle(fontSize: 20),
                 ),
-              ),
+                Spacer(),
+                Text(
+                    'GHS ${Provider.of<CartProvider>(context).calculatTotalPrice()}',
+                    style: TextStyle(fontSize: 20)),
+              ]),
             ),
+            SizedBox(height: 200),
+            Provider.of<CartProvider>(context).items.length == 0
+                ? SizedBox()
+                : Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: FlatButton(
+                      color: Color(0xFF003FFF),
+                      height: 60,
+                      minWidth: 400,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      onPressed: () {},
+                      child: Text(
+                        'CHECKOUT',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
           ],
         ),
       ),

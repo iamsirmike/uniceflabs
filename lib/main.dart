@@ -63,8 +63,19 @@ class _MyHomePageState extends State<MyHomePage> {
                       MaterialPageRoute(builder: (context) => Cart()),
                     );
                   },
-                  child: IconsContainer(
-                    icon: Icons.local_grocery_store,
+                  child: Stack(
+                    children: [
+                      IconsContainer(
+                        icon: Icons.local_grocery_store,
+                      ),
+                      Positioned(
+                        left: 20,
+                        child: Text(
+                          '${Provider.of<CartProvider>(context).items.length}',
+                          style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

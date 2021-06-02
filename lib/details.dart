@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uniceflabs/CartProvider.dart';
+import 'package:uniceflabs/cart.dart';
 import 'package:uniceflabs/main.dart';
 
 class Details extends StatefulWidget {
@@ -17,9 +18,12 @@ class Details extends StatefulWidget {
 class _DetailsState extends State<Details> {
   int _itemcount = 0;
 
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -186,8 +190,19 @@ class _DetailsState extends State<Details> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
               onPressed: () {
-                Provider.of<CartProvider>(context, listen: false).addToCart(widget.name, '40');
-                print(Provider.of<CartProvider>(context, listen: false).items.length);
+                Provider.of<CartProvider>(context, listen: false)
+                    .addToCart(widget.name, 40);
+                final snackBar = SnackBar(
+                  content: Text('Item was added successfully'),
+                  action: SnackBarAction(
+                    label: 'Visit Cart',
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>Cart()));
+                    },
+                  ),
+                );
+
+                _scaffoldKey.currentState.showSnackBar(snackBar);
               },
               child: Text(
                 'ADD TO CART',
